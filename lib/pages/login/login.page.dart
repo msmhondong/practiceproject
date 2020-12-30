@@ -1,6 +1,7 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:practiceproject/pages/login/login.component.dart';
 
 
 class UserLoginPage extends StatefulWidget{
@@ -18,8 +19,9 @@ class _UserLoginPageState extends State<UserLoginPage> {
           child: header(),
         ),
         body:body(),
-      )
-    );
+        bottomNavigationBar:bottomNavigationBar(),
+        )
+      );
   }
 
   Widget header() {
@@ -66,46 +68,48 @@ class _UserLoginPageState extends State<UserLoginPage> {
   }
 
   Widget body(){
-    return Container(
+    return
+      Container(
       width: MediaQuery.of(context).size.width,
+      height:MediaQuery.of(context).size.height,
       color: Color(0xFF052A60),
       padding: EdgeInsets.all(40),
-      child: Column(
+      child:SingleChildScrollView(child: Container(
+        width:MediaQuery.of(context).size.width,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children:[
           balanceDetails(),
+          SizedBox(height:50),
           quickScanDetails(),
-      ])
-    );
+          SizedBox(height:50),
+          billsPaymentOptions(),
+
+      ]))
+    ));
   }
 
   Widget balanceDetails(){
-    return Container(
-      width:MediaQuery.of(context).size.width,
-      child: Column(children:[
-      Text("Available Balance", style:TextStyle(color:Colors.white)),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:[
-        Text("P1000.00", style:TextStyle(color: Colors.white, fontSize:40)),
-        IconButton(icon: Icon(Icons.add_box, color: Color(0xFFFFB32C)), onPressed: null),
-      ])
-    ]));
+    return LoginComponent.balanceDetails();
+  }
+
+  Widget mainOptions({IconData icon = Icons.ac_unit, String lbl="", NormalClick event}){
+    return LoginComponent.mainOptions(icon:icon, lbl:lbl, event:event);
   }
 
   Widget quickScanDetails() {
-    return Container(
-      child:Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(icon: Icon(Icons.settings_overscan, color: Color(0xFFFFB32C)), onPressed: null),
-          IconButton(icon: Icon(Icons.send, color: Color(0xFFFFB32C)), onPressed: null),
-          IconButton(icon: Icon(Icons.bookmark, color: Color(0xFFFFB32C)), onPressed: null),
-          IconButton(icon: Icon(Icons.call_received, color: Color(0xFFFFB32C)), onPressed: null),
-        ],
-      )
-    );
+    return LoginComponent.quickScanDetails();
+  }
+
+  Widget billsPaymentOptions(){
+    return LoginComponent.billsPaymentOptions();
+  }
+
+  Widget bottomNavigationBar(){
+    return LoginComponent.bottomNavigationBar();
   }
 
 } 
+
+typedef NormalClick();
+typedef GetNameEvent(String name);
